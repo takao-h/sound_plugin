@@ -20,13 +20,26 @@ class SoundPlugin {
       'age': 25,
     }
     final list<dynamic> list = await _channel.invokeMethod('getList', params);
-    return list;
+    // return list;
+  }
+
+  Future<dynamic> _platformCallHandler(MethodCall call) {
+    switch (call.method)  {
+      print('call callMe : arguments = ${call.arguments}');
+      return Future.value('called from platform!');
+
+      defalt;
+      print('Unknowm method ${call.method}');
+      throw MissingPluginException();
+      break;
+
+  }
   }
 
   @override
   initState(){
     super initState();
 
-    _list.then((val) => print(val))
+    _channel.setMethodCallHandler(_platformCallHandler);
   }
 }

@@ -56,5 +56,19 @@ class SoundPlugin: FlutterPlugin, MethodCallHandler {
       else
         result.notImplemented()
     }
+
+    channel.invokeMethod("callMe", listIf("a", "b"), object : MethodChannel.Result {
+      override fun success(result: Any?) {
+        android.util.Log.d("Android", "result = $result")
+      }
+      override fun error(errorCode: Strin?, errorMessage: String?, errorDetals: Any?) {
+        android.util.Log.d("Android", "$errorCode, $errorMessage, $errorDetails")
+      }
+      override fun notImplemented() {
+        android.util.Log.d("Android", "notImplemented")
+      }
+    })
+    result.success(null)
   }
+
 }
